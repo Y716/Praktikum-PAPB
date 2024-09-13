@@ -3,20 +3,26 @@ package com.tifd.projectcomposed
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -30,6 +36,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -59,10 +68,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MyScreen() {
     var text by remember { mutableStateOf("") }
-    var username by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var passwordVisible by remember { mutableStateOf(false) }
-
+    var inputText by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -71,61 +77,47 @@ fun MyScreen() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "Log in",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
-
-        OutlinedTextField(
-            value = username,
-            onValueChange = { username = it },
-            label = { Text("Your Username") },
-            shape = RoundedCornerShape(16.dp), // Rounded corners for the TextField
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color.Gray, // Color for the underline when focused
-                unfocusedBorderColor = Color.Gray // Color for the underline when unfocused
-            ),
-            modifier = Modifier.fillMaxWidth()
-        )
+        Text(text = text)
         Spacer(modifier = Modifier.height(16.dp))
-        OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { Text("Your Password") },
-            shape = RoundedCornerShape(16.dp), // Rounded corners for the TextField
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color.Gray, // Color for the underline when focused
-                unfocusedBorderColor = Color.Gray // Color for the underline when unfocused
-            ),
-            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-
+        Row (
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
-        )
-
-//                val image = if (passwordVisible)
-//                    Icons.Filled.Visibility
-//                else Icons.Filled.VisibilityOff
-//
-//                IconButton(onClick = { passwordVisible = !passwordVisible }) {
-//                    Icon(imageVector = image, contentDescription = if (passwordVisible) "Hide password" else "Show password")
-//                }
-//            }
-        Spacer(modifier = Modifier.height(16.dp))
-
-        loginButton {
-            text = username // Set the text state when button is clicked
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.cat_icon_besar),
+                contentDescription = "Icon Profile",
+                modifier = Modifier.size(70.dp),
+//                colorFilter = ColorFilter.tint(Color.Black),
+                contentScale = ContentScale.Inside// Optional: Tint the image if needed
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            OutlinedTextField(
+                value = inputText,
+                onValueChange = { inputText = it},
+                label = { Text("Masukkan nama kucing")},
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
+                shape = RoundedCornerShape(8.dp)
+            )
         }
         Spacer(modifier = Modifier.height(16.dp))
-        FilledCardExample()
+        FilledCardExample(
+            text = "Meow meow"
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(onClick = {
+            text = inputText
+        }) {
+            Text("Meow!")
         }
 
     }
-
+}
 @Composable
-fun FilledCardExample() {
+fun FilledCardExample(
+    text: String
+) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant,
@@ -134,7 +126,7 @@ fun FilledCardExample() {
             .size(width = 500.dp, height = 100.dp)
     ) {
         Text(
-            text = "This app is supposed to be the best app you will ever experience! But we are still underdevelopment!",
+            text = text,
             modifier = Modifier
                 .padding(16.dp),
             textAlign = TextAlign.Center,
@@ -143,7 +135,7 @@ fun FilledCardExample() {
 }
 
 @Composable
-fun loginButton(onClick: () -> Unit) {
+fun LoginButton(onClick: () -> Unit) {
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
