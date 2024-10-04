@@ -51,6 +51,13 @@ android {
 }
 
 dependencies {
+    // Jetpack Compose Navigation
+    implementation (libs.androidx.navigation.compose)
+    // Coil for image loading
+    implementation (libs.coil.compose)
+    // Retrofit for network requests (optional, if you prefer Retrofit)
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.retrofit)
@@ -68,6 +75,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.firestore.ktx)
+    implementation(libs.androidx.navigation.runtime.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
