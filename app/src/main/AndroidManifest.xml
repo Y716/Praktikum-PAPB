@@ -14,7 +14,7 @@
         android:theme="@style/Theme.ProjectComposeD"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".AuthActivity"
             android:exported="true"
             android:theme="@style/Theme.ProjectComposeD">
             <intent-filter>
@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ListActivity" />
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
