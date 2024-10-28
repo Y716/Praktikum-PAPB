@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -114,10 +113,7 @@ fun ProfileScreen() {
 fun GitHubProfileContent(user: GitHubUser) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier
-            .fillMaxSize() // Fill the entire screen to allow vertical centering
-            .padding(16.dp)
+        modifier = Modifier.padding(16.dp)
     ) {
         // Profile Image
         Image(
@@ -140,25 +136,19 @@ fun GitHubProfileContent(user: GitHubUser) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Followers and Following Row wrapped in Box
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            contentAlignment = Alignment.Center // Center the Row horizontally and vertically
+        // Followers and Following
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(24.dp),
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(24.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(text = "${user.followers}", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                    Text(text = "Followers", fontSize = 16.sp)
-                }
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(text = "${user.following}", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                    Text(text = "Following", fontSize = 16.sp)
-                }
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = "${user.followers}", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                Text(text = "Followers", fontSize = 16.sp)
+            }
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = "${user.following}", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                Text(text = "Following", fontSize = 16.sp)
             }
         }
     }

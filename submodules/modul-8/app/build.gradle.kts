@@ -2,8 +2,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.gms.google-services")
-    id("com.google.devtools.ksp")
-    id("kotlin-parcelize")
 }
 
 android {
@@ -78,7 +76,6 @@ dependencies {
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.androidx.navigation.runtime.ktx)
-    implementation(libs.androidx.runtime.livedata)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -86,10 +83,4 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation(libs.compose.compiler) // Add Compose Compiler here
-
-    //Room database setup
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.common)
-    ksp(libs.androidx.room.compiler)
 }
