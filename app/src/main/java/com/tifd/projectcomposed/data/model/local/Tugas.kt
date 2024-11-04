@@ -1,5 +1,6 @@
 package com.tifd.projectcomposed.data.model.local
 
+import android.net.Uri
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -19,5 +20,8 @@ class Tugas (
     @ColumnInfo(name = "selesai")
     var selesai: Boolean,
     @ColumnInfo(name = "deadline")
-    val deadline: String
+    val deadline: String,
+    @ColumnInfo(name = "foto_tugas")
+    val imageUri: String
+
 ) : Parcelable

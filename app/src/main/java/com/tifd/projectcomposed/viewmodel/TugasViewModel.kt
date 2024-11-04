@@ -1,5 +1,6 @@
 package com.tifd.projectcomposed.viewmodel
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,10 +13,10 @@ class TugasViewModel(private val tugasRepository: TugasRepository) : ViewModel()
     val listTugas: LiveData<List<Tugas>> = tugasRepository.getAllTugas()
 
     // Modify this method to accept a deadline parameter
-    fun addTugas(matkul: String, detail_tugas: String, deadline: String) {
-        val newTugas = Tugas(matkul = matkul, detail_tugas = detail_tugas, selesai = false, deadline = deadline)
+    fun addTugas(matkul: String, detailTugas: String, deadline: String, imageUri: Uri) {
+        val tugas = Tugas(matkul = matkul, detail_tugas = detailTugas, deadline = deadline, imageUri = imageUri.toString(), selesai = false)
         viewModelScope.launch {
-            tugasRepository.insert(newTugas)
+            tugasRepository.insert(tugas)
         }
     }
 

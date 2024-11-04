@@ -1,3 +1,6 @@
 [submodule "modul-8"]
 	path = modul-8
 	url = https://github.com/Y716/Praktikum-PAPB
+[submodule "modul-9"]
+	path = modul-9
+	url = https://github.com/Y716/Praktikum-PAPB.git

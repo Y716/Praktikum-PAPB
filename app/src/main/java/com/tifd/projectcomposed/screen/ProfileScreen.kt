@@ -1,5 +1,6 @@
 package com.tifd.projectcomposed.screen
 
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,8 +13,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -32,16 +34,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
+import com.google.firebase.auth.FirebaseAuth
+import com.tifd.projectcomposed.AuthActivity
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
-
 
 // Retrofit GitHub API Setup
 interface GitHubService {
@@ -69,6 +73,8 @@ val gitHubService = retrofit.create(GitHubService::class.java)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen() {
+    val context = LocalContext.current
+    val auth = FirebaseAuth.getInstance()
     var user by remember { mutableStateOf<GitHubUser?>(null) }
     var isLoading by remember { mutableStateOf(true) }
     var error by remember { mutableStateOf<String?>(null) }
@@ -93,22 +99,41 @@ fun ProfileScreen() {
                     .padding(paddingValues),
                 contentAlignment = Alignment.Center
             ) {
-                when {
-                    isLoading -> {
-                        CircularProgressIndicator()
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    when {
+                        isLoading -> {
+                            CircularProgressIndicator()
+                        }
+                        error != null -> {
+                            Text(text = "Error: $error")
+                        }
+                        user != null -> {
+                            GitHubProfileContent(user!!)`
+                        }
                     }
-                    error != null -> {
-                        Text(text = "Error: $error")
-                    }
-                    user != null -> {
-                        GitHubProfileContent(user!!)
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Button(
+                        onClick = {
+                            auth.signOut()
+                            context.startActivity(Intent(context, AuthActivity::class.java))
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF6200EE), // Deep purple when enabled
+                            contentColor = Color.White // White text color
+                        )
+                    ) {
+                        Text(text = "Logout")
                     }
                 }
             }
         }
     )
-
 }
+
 
 @Composable
 fun GitHubProfileContent(user: GitHubUser) {
@@ -116,7 +141,7 @@ fun GitHubProfileContent(user: GitHubUser) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
-            .fillMaxSize() // Fill the entire screen to allow vertical centering
+            .fillMaxWidth() // Fill the width but not height
             .padding(16.dp)
     ) {
         // Profile Image

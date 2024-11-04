@@ -73,29 +73,6 @@ fun MatkulScreen() {
     }
 
     Scaffold(
-//        topBar = {
-//            TopAppBar(
-//                title = { Text("Jadwal Kuliah Gw") },
-//                actions = {
-//                    IconButton(onClick = {
-//                        navController.navigate("github_profile")
-//                    }) {
-//                        Icon(
-//                            painter = painterResource(id = R.drawable.github_icon),
-//                            contentDescription = "GitHub Profile",
-//                            tint = Color.Unspecified,
-//                            modifier = Modifier.size(48.dp)
-//                        )
-//
-//                    }
-//                },
-//                colors = TopAppBarDefaults.topAppBarColors(
-//                    containerColor = Color(0xFF6200EE),
-//                    titleContentColor = Color.White,
-//                    actionIconContentColor = Color.White
-//                )
-//            )
-//        },
 
         content = { paddingValues ->
             // Main content
@@ -119,18 +96,7 @@ fun MatkulScreen() {
                     }
                 }
 
-                Button(
-                    onClick = {
-                        auth.signOut()
-                        context.startActivity(Intent(context, AuthActivity::class.java))
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF6200EE), // Deep purple when enabled
-                        contentColor = Color.White, // White text color
-                    )
-                ) {
-                    Text(text = "Logout")
-                }
+
             }
         }
     )
